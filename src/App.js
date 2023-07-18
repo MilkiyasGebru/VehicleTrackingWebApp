@@ -19,6 +19,7 @@ import AddVehiclePage from "./pages/VehiclePages/AddVehicle";
 import ViewVehicle from "./pages/VehiclePages/ViewVehicle";
 import ViewVehiclePage from "./pages/VehiclePages/ViewVehicle";
 import TheftPage from "./pages/Other/TheftPage";
+import ChangePasswordPage from "./pages/Other/ChangePassword";
 
 function App() {
   return (
@@ -36,24 +37,38 @@ function App() {
 
 
 
-              <Route exact path={"/home"}>
-                  <Stack direction={"row"} sx={{ height: "100vh" }} >
-                      <Box sx={{ width: "240px", backgroundColor: "blue" }}><MuiDrawer/></Box>
-                      <Stack sx={{ width: "calc(100% - 240px)" }} spacing={2}>
-                          <MuiAppBar />
-                          <ViewVehiclePage  />
+              <Route  exact path={"/home"}>
+                  <Stack spacing={10} sx={{ backgroundColor: "#eeeeee", height: "100vh"}}>
+                      <MuiAppBar></MuiAppBar>
+                      <Stack direction={"row"}>
+                          <MuiDrawer/>
+
+                          <ViewVehiclePage />
+                      </Stack>
+                  </Stack>
+              </Route>
+
+              <Route exact path={"/theft"}>
+                  <Stack  spacing={10} sx={{ backgroundColor: "#eeeeee", height: "100vh"}}>
+                      <MuiAppBar />
+
+                      <Stack direction={"row"} spacing={2}>
+                          <MuiDrawer/>
+                          <TheftPage  />
 
                       </Stack>
                   </Stack>
 
               </Route>
 
-              <Route exact path={"/theft"}>
-                  <Stack direction={"row"} sx={{ height: "100vh" }} >
-                      <Box sx={{ width: "240px", backgroundColor: "blue" }}><MuiDrawer/></Box>
-                      <Stack sx={{ width: "calc(100% - 240px)" }} spacing={2}>
-                          <MuiAppBar />
-                          <TheftPage  />
+              <Route exact path={"/map"}>
+                  <Stack  >
+                      <MuiAppBar />
+
+                      <Stack direction={"row"} >
+
+                          <MuiDrawer/>
+                          <FinalMap  />
 
                       </Stack>
                   </Stack>
@@ -93,6 +108,18 @@ function App() {
 
               </Route>
 
+              <Route exact path={"/pass"}>
+                  <Stack direction={"row"} sx={{ height: "100vh" }} >
+                      <Box sx={{ width: "240px", backgroundColor: "blue" }}><MuiDrawer/></Box>
+                      <Stack sx={{ width: "calc(100% - 240px)" }} spacing={2}>
+                          <MuiAppBar />
+                          <ChangePasswordPage />
+
+                      </Stack>
+                  </Stack>
+
+              </Route>
+
 
           </Switch>
 
@@ -105,6 +132,39 @@ function App() {
 }
 
 export default App;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 {/*<Router>*/}
@@ -125,11 +185,9 @@ export default App;
 {/*                <Route path={"/history"}>*/}
 {/*                    <DisplayHistory />*/}
 {/*                </Route>*/}
-
 //             </Switch>
 //         </Stack>
 {/*        /!*<Box ><MuiAppBar /></Box>*!/*/}
-
 {/*    </Stack>*/}
 {/*</Router>*/}
 

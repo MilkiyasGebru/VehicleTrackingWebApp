@@ -13,6 +13,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {useHistory} from "react-router-dom";
+import {useState} from "react";
 
 function Copyright(props) {
     return (
@@ -32,18 +33,18 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function SignUp() {
+    const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
     let history = useHistory();
     const handleSubmit = (event) => {
         event.preventDefault();
+        setLoading(true);
         const data = new FormData(event.currentTarget);
         const name = data.get("name")
         const password = data.get("password")
         console.log({name:name,password:password})
 
-        // console.log({
-        //     email: data.get('email'),
-        //     password: data.get('password'),
-        // });
+
         console.log("I am doing fetch");
         fetch('http://localhost:3001/signUp',{
             method : "POST",
@@ -52,21 +53,22 @@ export default function SignUp() {
             },
             body: JSON.stringify({ name: name, password: password })
         }).then(response => response.json()).then((data)=>{
-            const {newUser} = data
-            console.log("THis is the useer"+newUser)
-            console.log("The password is "+newUser["password"])
-            console.log("The error is "+newUser["error"])
-            if (!newUser["error"]){
-                console.log("I am here")
-                console.log(newUser["error"])
-                console.log("I am going to home")
+            setLoading(false)
+            const {newUser,error} = data
+
+            if (error == null){
+
                 history.push('/home',{id: newUser["_id"]})
             }
             else{
-                console.log(data)
+                setError("User already exists withthat name")
 
 
             }
+        }).catch((err)=>{
+            setLoading(false);
+            setError("Sign Up Failed")
+
         })
 
     };
@@ -100,6 +102,7 @@ export default function SignUp() {
                             autoComplete="name"
                             autoFocus
                         />
+                        <Typography color={"error"}>{error}</Typography>
                         <TextField
                             margin="normal"
                             required
@@ -124,9 +127,7 @@ export default function SignUp() {
                         </Button>
                         <Grid container>
                             <Grid item xs>
-                                <Link href="#" variant="body2">
-                                    Forgot password?
-                                </Link>
+
                             </Grid>
                             <Grid item>
                                 <Link href="/" variant="body2">

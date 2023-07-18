@@ -8,7 +8,7 @@ function MuiAppBar(){
 
     return (
         <Box>
-        <AppBar position={"relative"} >
+        <AppBar position={"fixed"} >
             <Toolbar >
 
                 <IconButton>
@@ -24,13 +24,14 @@ function MuiAppBar(){
                 </Typography>
 
                 <Stack direction={"row"} spacing={2}>
-                    <Button color={"inherit"}>Profile</Button>
-                    <Button color={"inherit"}>About</Button>
+                    {/*<Button color={"inherit"}>Profile</Button>*/}
+                    {/*<Button color={"inherit"}>About</Button>*/}
                     <Button color={"inherit"} onClick={
                         function(){
                             history.replace('/');
                         }
                     }>LogOut</Button>
+                    <Typography sx={{width:24}}></Typography>
                 </Stack>
             </Toolbar>
 

@@ -16,7 +16,9 @@ function ViewVehiclePage(){
             setVehicles(fetchedResult)
 
         }
-        )
+        ).catch((err)=>{
+            console.log(err)
+        })
 
         const source = new EventSource("http://localhost:3001/updates");
         source.addEventListener("database-change", (event) => {
@@ -36,7 +38,7 @@ function ViewVehiclePage(){
             <Grid container spacing={3}>
                 { vehicles.map((vehicle) => {
                     return (
-                        <Grid item id={vehicle["PlateNumber"]}>
+                        <Grid item id={vehicle["PlateNumber"]} key={vehicle["_id"]}>
                             <CardVehicle vehicle={vehicle} />
                         </Grid>
                     );

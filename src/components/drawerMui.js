@@ -17,6 +17,7 @@ import DirectionsCarFilledIcon from '@mui/icons-material/DirectionsCarFilled';
 import AddIcon from '@mui/icons-material/Add';
 import PolicyIcon from '@mui/icons-material/Policy';
 import PersonIcon from '@mui/icons-material/Person';
+import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import {useHistory} from "react-router-dom";
 
 import {useLocation} from "react-router-dom";
@@ -24,7 +25,8 @@ function MuiDrawer(){
     const drawer_items = [{"text" : "View Vehicles", "icon":<DirectionsCarFilledIcon/>,"path":"/home"},
         {"text":"Add Vehicles","icon":<AddIcon/>,"path":"/add"},
         {"text": "Theft Report","icon":<PolicyIcon/>, "path":"/theft"},
-        {"text":"Profile","icon":<PersonIcon/>,"path":"/profile"}
+        // {"text":"Profile","icon":<PersonIcon/>,"path":"/profile"},
+        {"text":"Change Password","icon":<VpnKeyIcon />, "path":"/pass" }
     ]
     let history = useHistory();
     useEffect(()=>{
@@ -36,11 +38,11 @@ function MuiDrawer(){
 
         <Drawer
             sx={{
-                marginTop:240,
                 position:"relative",
                 width: 240,
                 flexShrink: 0,
                 '& .MuiDrawer-paper': {
+                    top: 64,
                     width: 240,
                     boxSizing: 'border-box',
 
@@ -50,7 +52,7 @@ function MuiDrawer(){
             variant="permanent"
             anchor="left"
         >
-            <Toolbar />
+            {/*<Toolbar />*/}
             <Divider />
             <List >
                 {drawer_items.map((item) => (

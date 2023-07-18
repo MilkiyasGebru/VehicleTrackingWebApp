@@ -13,6 +13,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {useHistory} from "react-router-dom";
+import {useState} from "react";
 
 function Copyright(props) {
     return (
@@ -34,8 +35,10 @@ const defaultTheme = createTheme();
 export default function SignIn() {
 
     const history = useHistory();
+    const [error, setError] = useState("");
+    const [loading,setLoading] = useState(false);
     const handleSubmit = (event) => {
-
+        setLoading(true);
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         const name = data.get("name")
@@ -50,13 +53,18 @@ export default function SignIn() {
         }).then(response => response.json()).then((data)=>{
             // console.log("I have found the response")
             // console.log("This is the "+data["error"])
+            setLoading(false)
             if (data["error"]){
                 console.log(data["error"])
+                setError("Invalid UserName or Incorrect Password")
             }
             else{
                 history.push('/home',{ id: data["_id"] })
 
             }
+        }).catch((err)=>{
+            setLoading(false);
+                setError("Login Failed")
         })
 
     };
@@ -100,6 +108,7 @@ export default function SignIn() {
                             id="password"
                             autoComplete="current-password"
                         />
+                        <Typography color={"error"}>{error}</Typography>
                         <FormControlLabel
                             control={<Checkbox value="remember" color="primary" />}
                             label="Remember me"
@@ -109,14 +118,15 @@ export default function SignIn() {
                             fullWidth
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
+                            disabled={loading}
                         >
                             Sign In
                         </Button>
                         <Grid container>
                             <Grid item xs>
-                                <Link href="#" variant="body2">
-                                    Forgot password?
-                                </Link>
+                                {/*<Link href="#" variant="body2">*/}
+                                {/*    Forgot password?*/}
+                                {/*</Link>*/}
                             </Grid>
                             <Grid item>
                                 <Link href="/signUp" variant="body2">

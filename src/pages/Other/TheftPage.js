@@ -6,14 +6,27 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-
-
 import {useLocation} from "react-router-dom";
 import {Box} from "@mui/material";
+import { TablePagination } from '@mui/material';
+
+
 function TheftPage(){
     const location = useLocation();
     const id = location.state.id
     const [thefts, setThefts] = useState([]);
+    const [page,setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const handleChangePage = (event,newPage)=>{
+        console.log("The new page is "+ newPage)
+        setPage(newPage);
+    }
+    const handleChangeRowsPerPage = (event)=>{
+        setRowsPerPage(+event.target.value);
+        setPage(0);
+    }
+
+
     useEffect(()=>{
         fetch('http://localhost:3001/theft').then((data)=> data.json()).then((result)=>{
             console.log("The thefts are "+result)
@@ -22,11 +35,13 @@ function TheftPage(){
             console.log("thefts "+thefts)
             const filterdThefts = result.filter(theft => theft.Owner === id)
             setThefts(filterdThefts)
+        }).catch((err)=>{
+            console.log(err)
         })
     },[])
 
     return (
-        <Box>
+        <Box sx={{paddingX:24}}>
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
@@ -39,9 +54,11 @@ function TheftPage(){
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {thefts.map((theft) => (
+                        {thefts
+                            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                            .map((theft) => (
                             <TableRow
-                                key={theft.PlateNumber}
+                                key={theft._id}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
                                 <TableCell component="th" scope="row">
@@ -56,6 +73,15 @@ function TheftPage(){
                     </TableBody>
                 </Table>
             </TableContainer>
+            <TablePagination
+                rowsPerPageOptions={[5, 7,10 ]}
+                component="div"
+                count={thefts.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+            />
         </Box>
     );
 }
