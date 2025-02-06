@@ -49,9 +49,7 @@ const FinalMap = () => {
 
         // maps.event.addListener(polygon.getPath(), 'insert_at',updateGeoFence);
         maps.event.addListener(polygon.getPath(), 'insert_at', (index) => {
-            // if (polygon.getPath().getLength() > 3) {
-            //     polygon.getPath().removeAt(index);
-            // }
+           
             updateGeoFence();
         });
     };
@@ -59,7 +57,7 @@ const FinalMap = () => {
     return (
         <div style={{ height: '100vh', width: '100%' }}>
             <GoogleMapReact
-                bootstrapURLKeys={{ key: 'AIzaSyAolMqc9bflA2GpOQ8GtT0cNrwZG3EjhO4' }}
+                bootstrapURLKeys={{ key: 'API_KEY' }}
                 defaultCenter={center}
                 defaultZoom={zoom}
                 yesIWantToUseGoogleMapApiInternals
